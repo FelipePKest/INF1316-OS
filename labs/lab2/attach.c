@@ -6,21 +6,13 @@
 #include <sys/wait.h>
 
 int main(void) {
-	int segmento, pid,id,status;
-	char *p;
-	// aloca a memória compartilhada
+    int segmento, *p;
 	segmento = shmget (7000, sizeof (char *), IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
 	// associa a memória compartilhada ao processo
-	if (id = fork() != 0) {
-		//pai
-		id = wait(&status);
-		shmat(segmento,p,0);
-	} else {
-		puts(p);
-	}
+	p = (char *) shmat (segmento, 0, 0); // comparar o retorno com -1
+	*p = "Mensagem do Dia\n";
+	
 	// libera a memória compartilhada do processo
 	shmdt (p);
-	// libera a memória compartilhada
-	shmctl (segmento, IPC_RMID, 0);
-	return 0;
+    return 0;
 }
