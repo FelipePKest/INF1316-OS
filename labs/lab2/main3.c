@@ -7,16 +7,22 @@
 
 int main(void) {
 	int segmento, pid,id,status;
-	char *p;
+	char * p;
+	char aux[80];
 	// aloca a memória compartilhada
-	segmento = shmget (7000, sizeof (char *), IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
+	
 	// associa a memória compartilhada ao processo
 	if (id = fork() != 0) {
-		//pai
+		//pai espera o filho alocar memoria e guardar a mensagem do dia;
 		id = wait(&status);
-		shmat(segmento,p,0);
+		printf("%s",p);
 	} else {
-		puts(p);
+		// filho
+		segmento = shmget (7000, sizeof (char)*80, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR | S_IROTH );
+		p = shmat(segmento,0,0);
+		scanf("%s",aux);
+		p = aux;
+		exit(status);
 	}
 	// libera a memória compartilhada do processo
 	shmdt (p);

@@ -12,6 +12,8 @@ int main(int argc, char *argv[]) {
     segmento = shmget(IPC_PRIVATE, sizeof (int)*900, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
     // associa a memória compartilhada ao processo
     p = (int *) shmat (segmento, 0, 0); // comparar o retorno com -1
+    // inserindo seed no RNG (Random Number Generator)
+    srand(time(0));
     if (p == -1) {
         // falha em attach o processo
         puts("Erro no attach da memoria");
@@ -48,8 +50,9 @@ int main(int argc, char *argv[]) {
                     }
                 }
             }
-            p[i] = rand();
-            p[i+300] = rand();
+            // Limitando o valor ate 1000
+            p[i] = rand()%1000;
+            p[i+300] = rand()%1000;
         }
         pid = wait (&status);
 
