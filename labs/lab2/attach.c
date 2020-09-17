@@ -1,22 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
 #include <sys/shm.h>
 #include <sys/stat.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 int main(void) {
-    int segmento; 
-	char letters[80];
-	char * dest;
-	// segmento = shmget (7000, sizeof (char *), IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
-	// associa a memória compartilhada ao processo
-	// letters = (char *) shmat (segmento, 0, 0); // comparar o retorno com -1
-	strcpy(letters,"Hello World");
-	dest = letters;
-	printf("%s \n",dest);
+	char *p,aux[80];
+	int segmento;
+	// aloca a memória compartilhada
+	segmento = shmget (7000, sizeof(char)*80, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR | S_IROTH );
+	p = (char *) shmat(segmento, 0, 0); // comparar o retorno com -1
+	printf("Insira uma mensagem do dia:\n");
+	scanf("%[^\n]", p);
+	sleep(20);
 	// libera a memória compartilhada do processo
-	// shmdt (letters);
-    return 0;
+	puts(p);
+	shmdt(p);
 }

@@ -30,19 +30,19 @@ int main(int argc, char *argv[]) {
                     // criou filho
                     switch (i%3) {
                     case 0:
-                        // primeiro filho
+                        // primeiro filho (600-699)
                         for (int j = 0; j<100;j++) {
                             p[j+600] = p[j]+p[j+300];
                         }
                         exit(status);
                     case 1:
-                        // segundo filho
+                        // segundo filho (700-799)
                         for (int j = 100; j<200;j++) {
                             p[j+600] = p[j]+p[j+300];
                         }
                         exit(status);
                     case 2:
-                        // terceiro filho
+                        // terceiro filho (800-899)
                         for (int j = 200; j<300;j++) {
                             p[j+600] = p[j]+p[j+300];
                         }
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
                     }
                 }
             }
-            // Limitando o valor ate 1000
+            // Limitando o valor ate 1000 para nao gerar overflow
             p[i] = rand()%1000;
             p[i+300] = rand()%1000;
         }
