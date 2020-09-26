@@ -37,7 +37,9 @@ int main(void) {
             pthread_create(&threads[t], NULL, cont_decrescente, (void *) t);
         }
     }
-    for(t=0; t < NUM_THREADS; t++)
-    pthread_join(threads[t],NULL); /* wait for all the threads to terminate*/
+    for(t=0; t < NUM_THREADS; t++) {
+        pthread_join(threads[t],NULL); /* wait for all the threads to terminate*/
+    }
+    
     return 0;
 } 
