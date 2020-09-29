@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#define TEMPO 10
-
 void killHandler(int sinal);
 
 int main(void) {

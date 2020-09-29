@@ -3,7 +3,7 @@
 
 int main (void) {
   fprintf(stdout, "indo dormir...\n");
-  sleep(1);
+  sleep(5);
   fprintf(stdout, "Acordei!\n");
   return 0;
 }
