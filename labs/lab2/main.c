@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]) {
     int segmento, *p, id, pid, status;
     // aloca a memória compartilhada com o tamanho do vetor de 900 inteiros
-    segmento = shmget(IPC_PRIVATE, sizeof (int)*900, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
+    segmento = shmget(8000, sizeof (int)*900, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
     // associa a memória compartilhada ao processo
     p = (int *) shmat (segmento, 0, 0); // comparar o retorno com -1
     // inserindo seed no RNG (Random Number Generator)
