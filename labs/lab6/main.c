@@ -1,3 +1,17 @@
+/********************************************************************************************
+* Course: CS 4540 – Fall 2014
+* Assignment <2> - 
+* Name: <Waleed H Gudah>
+* E-mail: <waleed.h.gudah@wmich.edu>
+* Submitted: <10/12/14>
+/********************************************************************************************
+    This program forks to create a child process, the Parent process takes a command line argument 
+    example:(./thisProgram hello) or (./this "Hello My name is Waleed Gudah")
+    writes it to a pipe, the child process calls the toggleString method 
+    to toggle the case of the message and writes the result into a second pipe
+    finally the parent process reads the now toggle message and prints it to the console.
+*********************************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -27,27 +41,27 @@
 */
 char *toggleString(char *argv){
 
-  int i;      /* Declare counter */
+    int i;      /* Declare counter */
 
-  char *str = malloc(sizeof(argv[1]));  /* Declare array sizeof input */
+    char *str = malloc(sizeof(argv[1]));  /* Declare array sizeof input */
+    
+    strcpy(str, argv);    /* Copy String to char array */
+    
+    for(i=0;str[i]!='\0';i++) { //Loop through length of string
+
+        if(str[i]>='A'&&str[i]<='Z'){ //if the array at i is uppercase
+
+         str[i]+=32;            //Make it lower case
   
-  strcpy(str, argv);    /* Copy String to char array */
-  
-  for(i=0;str[i]!='\0';i++) { //Loop through length of string
+    } else if (str[i]>='a'&&str[i]<='z') {//  if the array at i is lowercase 
 
-      if(str[i]>='A'&&str[i]<='Z'){ //if the array at i is uppercase
+        str[i]-=32;             //Make it uppercase
 
-        str[i]+=32;            //Make it lower case
+        }
+ 
+    }
 
-  } else if (str[i]>='a'&&str[i]<='z') {//  if the array at i is lowercase 
-
-      str[i]-=32;             //Make it uppercase
-
-      }
-
-  }
-
-  return str;
+return str;
 
 }
 
@@ -92,7 +106,7 @@ int inputValidation(int argc, char *argv[]){
 
     }
 
-      return (0);
+      return 0;
     
     }    
 
@@ -108,7 +122,7 @@ int main(int argc, char *argv[]) {
 
     int fd[2*NUM_PIPES];    //Declare int[] of file descriptors
     
-    int len, i;             //Declare length and integer for count
+    int len = 0, i;             //Declare length and integer for count
     
     pid_t pid;              //Declare process id
 
@@ -120,6 +134,7 @@ int main(int argc, char *argv[]) {
 
     strcpy(parent, argv[1]); 
 
+    puts("Here");
     // create all the descriptor pairs we need
     for (i=0; i<NUM_PIPES; ++i)
     {
@@ -231,4 +246,3 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
 
 }
-  //////////////////////////////Pa

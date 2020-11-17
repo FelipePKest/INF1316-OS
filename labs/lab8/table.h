@@ -1,0 +1,1 @@
+typedef struct table Table;
