@@ -1,0 +1,1 @@
+typedef struct mem_fisica MemFisica;

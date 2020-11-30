@@ -1,0 +1,1 @@
+typedef struct frame Frame;
