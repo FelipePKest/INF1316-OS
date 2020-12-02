@@ -1,2 +1,2 @@
-typedef struct page Page;
-typedef struct TabelaPagina TabelaPagina;
+typedef struct page Pagina;
+// typedef struct TabelaPagina TabelaPagina;
