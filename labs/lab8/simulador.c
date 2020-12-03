@@ -32,45 +32,50 @@ Pagina initPage(unsigned int addr, int tam_pag) {
     return page;
 }
 
-int checkQueueEmpty(TP *queue, int size{
+int checkMemoryEmpty(int *memory, int size){
     int i;
     int index = -1;
     for(i=0; i <= size; i++){
-        if(queue[i].page == null){
-            index = 1;
+        if(memory[i] == -1){
+            index = i;
             break;
         } 
     }
     return index;
 }
 
-void LRU(TP *queue, int size, int *memory,int tam_mem){
+
+
+int LRU(TP *queue, int size, int *memory,int tam_mem){
     int index;
-    int i;
+    int nPageFault = 0;
+    int i, aux;
     for(i = 0; i <= tam_mem; i++){
-        if(!queue[memory[i]].page->inMemory){
-            index = checkLatestUse(TP *queue, int size);
-            memory[i] = queue[];
+        if(!queue[i].page->inMemory){
+            nPageFault++;
+            index = checkMemoryEmpty(memory, tam_mem);
+            if(index != -1){
+                for(aux = 0; aux < tam_mem; aux++){
+                    memory[aux] = memory[aux+1];
+                }
+                memory[tam_mem] = queue[i];
+
+            }else{
+                memory[index] = queue[i].page->n_page;
+            }
         }
 
     }
+    return nPageFault;
 
 }
 
-void NRU(TP queue, int sizememory, tam_mem){
-    int index;
-    int i;
-    for(i = 0; i <= size; i++){
-
-    }    
+void NRU(TP *queue, int size, int *memory, int tam_mem){
+    puts("ERRO");
 }
 
-void NOVO(TP queue, int size){
-    int index;
-    int i;
-    for(i = 0; i <= size; i++){
-
-    }
+void NOVO(TP *queue, int size, , int *memory, int tam_mem){
+    puts("ERRO");
 }
 
 
@@ -103,6 +108,9 @@ int main(int argc, char * argv[]) {
     TP queue[queue_size];
     tam_mem = tam_mem*1024;
     int memory[tam_mem];
+    for(i = 0; i<= tam_mem; i++){
+        memory[i] = -1;
+    }
 
     // Verificacao de READ/WRITE
     char rw;
@@ -140,8 +148,10 @@ int main(int argc, char * argv[]) {
         i++;
     }
     if(alg = "LRU"){
-        LRU(queue, queue_size,memory, tam_mem);
-            
+        nPageFaults = LRU(queue, queue_size,memory, tam_mem);
+        printf("Numero de page faults em LRU: %d", nPageFaults);
+        printf("Numero de reads na memória em LRU: %d", nRead);
+        printf("Numero de reads na memória em LRU: %d", nWritten);
     }
     else if(alg = "NRU"){
         NRU(queue, queue_size,memory, tam_mem);
