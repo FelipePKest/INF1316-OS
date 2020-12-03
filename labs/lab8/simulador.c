@@ -32,40 +32,45 @@ Pagina initPage(unsigned int addr, int tam_pag) {
     return page;
 }
 
-int checkQueueEmpty(TP *queue, int size{
+int checkQueueEmpty(TP queue[], int size) {
     int i;
     int index = -1;
-    for(i=0; i <= size; i++){
-        if(queue[i].page == null){
+    for(i=0; i <= size; i++) {
+        if(queue->F == 0) {
+
+        }
+        if(queue->page.inMemory == -1){
             index = 1;
             break;
-        } 
+        }
+        queue+=sizeof(TP); 
     }
     return index;
 }
 
-void LRU(TP *queue, int size, int *memory,int tam_mem){
+void LRU(TP *queue, int size, int *memory,int tam_mem) {
     int index;
     int i;
     for(i = 0; i <= tam_mem; i++){
-        if(!queue[memory[i]].page->inMemory){
-            index = checkLatestUse(TP *queue, int size);
-            memory[i] = queue[];
+        if(queue[memory[i]].page->inMemory == 0){
+            // TODO: Implement this
+            // index = checkLatestUse(TP *queue, int size);
+            memory[i] = queue->page.n_page;
         }
-
+        queue+=sizeof(TP); 
     }
 
 }
 
-void NRU(TP queue, int sizememory, tam_mem){
+void NRU(TP *queue, int sizememory, int tam_mem){
     int index;
     int i;
-    for(i = 0; i <= size; i++){
+    for(i = 0; i <= sizememory; i++){
 
     }    
 }
 
-void NOVO(TP queue, int size){
+void NOVO(TP *queue, int size){
     int index;
     int i;
     for(i = 0; i <= size; i++){
@@ -144,11 +149,11 @@ int main(int argc, char * argv[]) {
             
     }
     else if(alg = "NRU"){
-        NRU(queue, queue_size,memory, tam_mem);
+        NRU(queue, queue_size,memory);
             
     }
     else{ // NOVO
-        NOVO(queue, queue_size,memory, tam_mem);
+        NOVO(queue, queue_size);
     }   
 
     return 0;

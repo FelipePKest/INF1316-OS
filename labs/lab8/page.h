@@ -1,2 +1,4 @@
-typedef struct page Pagina;
-// typedef struct TabelaPagina TabelaPagina;
+typedef struct page {
+    int n_page;
+    int inMemory;
+} Pagina;

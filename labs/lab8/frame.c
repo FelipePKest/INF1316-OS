@@ -3,10 +3,10 @@
 #include "frame.h"
 #include "page.h"
 
-struct tablepage{
-    Pagina page;
+struct tablepage {
+    Pagina p;
     char R;
     char F;
     struct timeval lastUse; //??
-    Frame frame;
-} TP;
+    // Frame frame;
+};
