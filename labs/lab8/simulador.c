@@ -3,16 +3,12 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/shm.h>
+#include <string.h>
 #include <math.h>
 #include <stdbool.h>
 
 #include "page.h"
 #include "frame.h"
-
-// struct main {
-//     /* data */
-// };
-
 
 int calculate_shift_value(int size) {
     int s = 10;
@@ -29,14 +25,55 @@ Pagina initPage(unsigned int addr, int tam_pag) {
 
     // Calcula tamanho do shift baseado no tamanho da pagina recebida como parametro do programa
     s = calculate_shift_value(tam_pag);
+
     // Numero da pagina a ser encontrada
     page.n_page = addr >> s;
-    // Deslocamento
-    page.desloc = (addr >> s;) << s;
-    // A pagina está na memória?
     page.inMemory = 0; // falso
     return page;
 }
+
+int checkQueueEmpty(TP *queue, int size{
+    int i;
+    int index = -1;
+    for(i=0; i <= size; i++){
+        if(queue[i].page == null){
+            index = 1;
+            break;
+        } 
+    }
+    return index;
+}
+
+void LRU(TP *queue, int size, int *memory,int tam_mem){
+    int index;
+    int i;
+    for(i = 0; i <= tam_mem; i++){
+        if(!queue[memory[i]].page->inMemory){
+            index = checkLatestUse(TP *queue, int size);
+            memory[i] = queue[];
+        }
+
+    }
+
+}
+
+void NRU(TP queue, int sizememory, tam_mem){
+    int index;
+    int i;
+    for(i = 0; i <= size; i++){
+
+    }    
+}
+
+void NOVO(TP queue, int size){
+    int index;
+    int i;
+    for(i = 0; i <= size; i++){
+
+    }
+}
+
+
 
 
 int main(int argc, char * argv[]) {
@@ -46,20 +83,37 @@ int main(int argc, char * argv[]) {
         puts("Argumentos errados");
         exit(-1);
     }
+
     // Argumentos recebidos como input do usuario
     char * alg = argv[1];
     char * filename = argv[2];
     int tam_pag = atoi(argv[3]);
     int tam_mem = atoi(argv[4]);
+    if(tam_pag < 8 || tam_pag > 32) {
+		printf("Tamanho de pagina deve ser entre 8 e 32KB.\n");
+	}
+	if(tam_mem < 128 || tam_mem > 16384) {
+		printf("Tamanho de memoria fisica deve ser entre 128KB e 16MB.\n");
+	}
+	if(strcmp(alg, "LRU") && strcmp(alg, "NRU") && strcmp(alg, "NOVO")) {
+		printf("Algoritmo incorreto.\n");
+	}
 
-    int tam_frame = tam_pag/2;
-    TP queue[200]; // tam a calcular
+    int queue_size = tam_mem/tam_pag;
+    TP queue[queue_size];
+    tam_mem = tam_mem*1024;
+    int memory[tam_mem];
 
     // Verificacao de READ/WRITE
     char rw;
     unsigned int addr;
 
-    // Variaveis para Tabela de Paginas 
+    // Variaveis para analise
+	int time = 0;
+	int nPageFaults = 0;
+	int nWritten = 0;
+    int nRead = 0;
+
 
     // Lendo o arquivo recebido como input do programa
     FILE * file = fopen(filename,"r");
@@ -72,24 +126,30 @@ int main(int argc, char * argv[]) {
     // lendo o arquivo recebido como parametro
     while (fscanf(file, "%x %c ", &addr, &rw) == 2) {
 
-    //     // if (i == 0) {
-    //     //     new_addr = addr;
-    //     // } else if (i == 1) {
-    //     //     new_addr2 = addr;
-    //     // }
-    //     // i++;
-    //     printf("%d %c\n",addr,rw);
-    //     int num_pag = addr >> s;
-    //     printf("NUM PAG =  %d\n",num_pag);
+        if (rw = 'R') {
+            nRead++;
+            queue[i].R = 1;
+            queue[i].F = 0;
+        }
+        else{
+            nWritten++;
+            queue[i].F = 1;
+            queue[i].R = 0;
+        }
+        queue[i].page = initPage(addr, tam_pag);     
+        i++;
     }
-    if(alg = "LRU"){ // sepa definir processos com si
+    if(alg = "LRU"){
+        LRU(queue, queue_size,memory, tam_mem);
+            
     }
     else if(alg = "NRU"){
+        NRU(queue, queue_size,memory, tam_mem);
+            
     }
     else{ // NOVO
-    }
-    // printf("addr,addr1,addr2 = %d\n",addr,new_addr);
-    // printf("page_num = %d\n",num_pag);
+        NOVO(queue, queue_size,memory, tam_mem);
+    }   
 
     return 0;
 }
