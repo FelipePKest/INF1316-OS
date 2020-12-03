@@ -22,7 +22,6 @@ int calculate_shift_value(int size) {
 Pagina initPage(unsigned int addr, int tam_pag) {
     Pagina page;
     int s;
-
     // Calcula tamanho do shift baseado no tamanho da pagina recebida como parametro do programa
     s = calculate_shift_value(tam_pag);
 
@@ -32,94 +31,43 @@ Pagina initPage(unsigned int addr, int tam_pag) {
     return page;
 }
 
-<<<<<<< HEAD
-int checkMemoryEmpty(int *memory, int size){
+int checkMemoryEmpty(int memory[], int size){
     int i;
     int index = -1;
     for(i=0; i <= size; i++){
         if(memory[i] == -1){
             index = i;
-=======
-int checkQueueEmpty(TP queue[], int size) {
-    int i;
-    int index = -1;
-    for(i=0; i <= size; i++) {
-        if(queue->F == 0) {
-
         }
-        if(queue->page.inMemory == -1){
-            index = 1;
->>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
-            break;
-        }
-        queue+=sizeof(TP); 
     }
     return index;
-}
 
-<<<<<<< HEAD
-
-
-int LRU(TP *queue, int size, int *memory,int tam_mem){
-=======
-void LRU(TP *queue, int size, int *memory,int tam_mem) {
->>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
-    int index;
+void LRU(TP queue[], int size, int memory[], int tam_mem){
+    int index, aux, i, j;
     int nPageFault = 0;
-    int i, aux;
     for(i = 0; i <= tam_mem; i++){
-<<<<<<< HEAD
-        if(!queue[i].page->inMemory){
+        if(!queue[memory[i]]->page.inMemory){
             nPageFault++;
             index = checkMemoryEmpty(memory, tam_mem);
             if(index != -1){
                 for(aux = 0; aux < tam_mem; aux++){
                     memory[aux] = memory[aux+1];
                 }
-                memory[tam_mem] = queue[i];
+                memory[tam_mem] = queue[i].page->n_page;
 
             }else{
                 memory[index] = queue[i].page->n_page;
             }
-=======
-        if(queue[memory[i]].page->inMemory == 0){
-            // TODO: Implement this
-            // index = checkLatestUse(TP *queue, int size);
-            memory[i] = queue->page.n_page;
->>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
         }
-        queue+=sizeof(TP); 
     }
     return nPageFault;
 
 }
-
-<<<<<<< HEAD
-void NRU(TP *queue, int size, int *memory, int tam_mem){
+void NRU(TP queue[], int size, int memory[], int tam_mem){
     puts("ERRO");
 }
 
-void NOVO(TP *queue, int size, , int *memory, int tam_mem){
+void NOVO(TP queue[], int size, , int memory[], int tam_mem){
     puts("ERRO");
-=======
-void NRU(TP *queue, int sizememory, int tam_mem){
-    int index;
-    int i;
-    for(i = 0; i <= sizememory; i++){
-
-    }    
-}
-
-void NOVO(TP *queue, int size){
-    int index;
-    int i;
-    for(i = 0; i <= size; i++){
-
-    }
->>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
-}
-
-
 
 
 int main(int argc, char * argv[]) {
@@ -145,20 +93,17 @@ int main(int argc, char * argv[]) {
 		printf("Algoritmo incorreto.\n");
 	}
 
-    int queue_size = tam_mem/tam_pag;
+    int queue_size; 
+    queue_size = tam_mem/tam_pag;
     TP queue[queue_size];
     tam_mem = tam_mem*1024;
     int memory[tam_mem];
-    for(i = 0; i<= tam_mem; i++){
-        memory[i] = -1;
-    }
 
     // Verificacao de READ/WRITE
     char rw;
     unsigned int addr;
 
     // Variaveis para analise
-	int time = 0;
 	int nPageFaults = 0;
 	int nWritten = 0;
     int nRead = 0;
@@ -178,21 +123,19 @@ int main(int argc, char * argv[]) {
         if (rw = 'R') {
             nRead++;
             queue[i].R = 1;
-            queue[i].F = 0;
+            queue[i].M = 0;
         }
         else{
             nWritten++;
-            queue[i].F = 1;
+            queue[i].M = 1;
             queue[i].R = 0;
         }
         queue[i].page = initPage(addr, tam_pag);     
         i++;
     }
     if(alg = "LRU"){
-        nPageFaults = LRU(queue, queue_size,memory, tam_mem);
-        printf("Numero de page faults em LRU: %d", nPageFaults);
-        printf("Numero de reads na memória em LRU: %d", nRead);
-        printf("Numero de reads na memória em LRU: %d", nWritten);
+        LRU(queue, queue_size,memory, tam_mem);
+            
     }
     else if(alg = "NRU"){
         NRU(queue, queue_size,memory);
