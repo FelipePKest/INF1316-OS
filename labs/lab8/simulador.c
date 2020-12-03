@@ -32,25 +32,43 @@ Pagina initPage(unsigned int addr, int tam_pag) {
     return page;
 }
 
+<<<<<<< HEAD
 int checkMemoryEmpty(int *memory, int size){
     int i;
     int index = -1;
     for(i=0; i <= size; i++){
         if(memory[i] == -1){
             index = i;
+=======
+int checkQueueEmpty(TP queue[], int size) {
+    int i;
+    int index = -1;
+    for(i=0; i <= size; i++) {
+        if(queue->F == 0) {
+
+        }
+        if(queue->page.inMemory == -1){
+            index = 1;
+>>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
             break;
-        } 
+        }
+        queue+=sizeof(TP); 
     }
     return index;
 }
 
+<<<<<<< HEAD
 
 
 int LRU(TP *queue, int size, int *memory,int tam_mem){
+=======
+void LRU(TP *queue, int size, int *memory,int tam_mem) {
+>>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
     int index;
     int nPageFault = 0;
     int i, aux;
     for(i = 0; i <= tam_mem; i++){
+<<<<<<< HEAD
         if(!queue[i].page->inMemory){
             nPageFault++;
             index = checkMemoryEmpty(memory, tam_mem);
@@ -63,19 +81,42 @@ int LRU(TP *queue, int size, int *memory,int tam_mem){
             }else{
                 memory[index] = queue[i].page->n_page;
             }
+=======
+        if(queue[memory[i]].page->inMemory == 0){
+            // TODO: Implement this
+            // index = checkLatestUse(TP *queue, int size);
+            memory[i] = queue->page.n_page;
+>>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
         }
-
+        queue+=sizeof(TP); 
     }
     return nPageFault;
 
 }
 
+<<<<<<< HEAD
 void NRU(TP *queue, int size, int *memory, int tam_mem){
     puts("ERRO");
 }
 
 void NOVO(TP *queue, int size, , int *memory, int tam_mem){
     puts("ERRO");
+=======
+void NRU(TP *queue, int sizememory, int tam_mem){
+    int index;
+    int i;
+    for(i = 0; i <= sizememory; i++){
+
+    }    
+}
+
+void NOVO(TP *queue, int size){
+    int index;
+    int i;
+    for(i = 0; i <= size; i++){
+
+    }
+>>>>>>> 98b7cb44d7c7e92f729698575c6c184a7917ab67
 }
 
 
@@ -154,11 +195,11 @@ int main(int argc, char * argv[]) {
         printf("Numero de reads na memória em LRU: %d", nWritten);
     }
     else if(alg = "NRU"){
-        NRU(queue, queue_size,memory, tam_mem);
+        NRU(queue, queue_size,memory);
             
     }
     else{ // NOVO
-        NOVO(queue, queue_size,memory, tam_mem);
+        NOVO(queue, queue_size);
     }   
 
     return 0;
